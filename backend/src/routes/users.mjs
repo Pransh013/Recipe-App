@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { userModel } from "../Models/Users.mjs";
 
 const router = express.Router();
-const seretKey = process.env.SECRET_KEY;
+const secretKey = process.env.SECRET_KEY;
 
 router.post("/register", async (req, res) => {
   const {
@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
 
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
   if(!isPasswordCorrect) return res.status(401).json({ message: "Incorrect password" });
-  const token = jwt.sign({userId: user.id}, seretKey);
+  const token = jwt.sign({userId: user.id}, secretKey);
   
   res.json({userId: user.id, token});
 })
